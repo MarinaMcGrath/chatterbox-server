@@ -11,7 +11,15 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
-const data = [];
+const data = {
+  results: [ 
+    {
+      username: 'Nikki Steamboat',
+      rommname: 'lobby',
+      text: 'Hey cat'
+    }
+  ]
+};
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //

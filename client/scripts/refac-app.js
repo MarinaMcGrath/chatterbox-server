@@ -82,7 +82,7 @@ const app = {
     $.ajax({
         url: app.server,
         type: 'GET',
-        data: { order: '-createdAt' },
+        // data: { order: '-createdAt' },
         success: function(d) {
             app.allData = d.results; 
             callback();       
