@@ -35,12 +35,12 @@ describe('server', function() {
 
   it('should accept POST requests to /classes/messages', function(done) {
     var requestParams = {method: 'POST',
-      uri: 'http://127.0.0.1:3000/classes/messages',
-      json: {
+      url: 'http://127.0.0.1:3000/classes/messages',
+      json: JSON.stringify({
         username: 'Jono',
-        message: 'Do my bidding!'}
+        message: 'Do my bidding!'
+      })
     };
-
     request(requestParams, function(error, response, body) {
       expect(response.statusCode).to.equal(201);
       done();
@@ -50,17 +50,17 @@ describe('server', function() {
   it('should respond with messages that were previously posted', function(done) {
     var requestParams = {method: 'POST',
       uri: 'http://127.0.0.1:3000/classes/messages',
-      json: {
+      json: JSON.stringify({
         username: 'Jono',
-        message: 'Do my bidding!'}
+        message: 'Do my bidding!'})
     };
 
     request(requestParams, function(error, response, body) {
       // Now if we request the log, that message we posted should be there:
       request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
         var messages = JSON.parse(body).results;
-        expect(messages[0].username).to.equal('Jono');
-        expect(messages[0].message).to.equal('Do my bidding!');
+        expect(JSON.parse(messages[0]).username).to.equal('Jono');
+        expect(JSON.parse(messages[0]).message).to.equal('Do my bidding!');
         done();
       });
     });

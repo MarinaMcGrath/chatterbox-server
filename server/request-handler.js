@@ -53,34 +53,23 @@ var requestHandler = function(request, response) {
   // other than plain text, like JSON or HTML.
   headers['Content-Type'] = 'text/plain';
 
-  // .writeHead() writes to the request line and headers of the response,
-  // which includes the status and all headers.
-  
-
-  
   if (request.url === '/classes/messages' && request.method === 'GET') {
     response.writeHead(statusCode, headers);
-    response.write(JSON.stringify(data));
+    response.end(JSON.stringify(data));
   } else if (request.url === '/classes/messages' && request.method === 'POST') {
-    response.writeHead(201, headers);
+    statusCode = 201;
+    response.writeHead(statusCode, headers);
     request.on('data', function(d) {
       data.results.push(JSON.parse(d));
+      response.end(JSON.parse(d));
     });
-  } else if (request.url === '/classes/messages/' && request.method === 'OPTIONS') {
-    response.write(JSON.stringify(defaultCorsHeaders));
+  } else if (request.url === '/classes/messages' && request.method === 'OPTIONS') {
+    response.end(JSON.stringify(defaultCorsHeaders));
   } else {
     response.writeHead(404, headers);
-    response.write(JSON.stringify(data));
+    response.end(JSON.stringify(data));
   }
-  // response.write(JSON.stringify(data));
-  response.end();
-  // Make sure to always call response.end() - Node may not send
-  // anything back to the client until you do. The string you pass to
-  // response.end() will be the body of the response - i.e. what shows
-  // up in the browser.
-  //
-  // Calling .end "flushes" the response's internal buffer, forcing
-  // node to actually send all the data over to the client.
+
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
@@ -99,4 +88,4 @@ var defaultCorsHeaders = {
   'access-control-max-age': 10 // Seconds.
 };
 
-module.exports = requestHandler;
+module.exports.requestHandler = requestHandler;
