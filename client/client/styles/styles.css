@@ -88,18 +88,3 @@ form input[type=text] {
     background-color: #0090da;
 }
 
-.username {
-    font-weight: bold;
-    color: #2bbbad;
-}
-
-.date {
-    opacity: .6;
-}
-
-.roomname {
-    font-weight: bold;
-}
-/*.person-av {
-    display: none;
-}*/
