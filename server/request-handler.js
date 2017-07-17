@@ -13,14 +13,14 @@ this file and include it in basic-server.js so that it actually works.
 **************************************************************/
 const data = {
   results: [ 
-    {
-      objectId: 'z5UIHddq4j',
-      username: 'Nikki Steamboat',
-      roomname: 'lobby',
-      text: 'heycat',
-      createdAt: '2017-07-10T04:26:40.507Z',
-      updatedAt: '2017-07-10T04:26:40.507Z'
-    },
+    // {
+    //   objectId: 'z5UIHddq4j',
+    //   username: 'Nikki Steamboat',
+    //   roomname: 'lobby',
+    //   text: 'heycat',
+    //   createdAt: '2017-07-10T04:26:40.507Z',
+    //   updatedAt: '2017-07-10T04:26:40.507Z'
+    // },
   ]
 };
 var requestHandler = function(request, response) {
@@ -55,13 +55,24 @@ var requestHandler = function(request, response) {
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
-  response.writeHead(statusCode, headers);
+  
 
-  if (request.url === '/classes/messages/' && request.method === 'GET') {
+  
+  if (request.url === '/classes/messages' && request.method === 'GET') {
+    response.writeHead(statusCode, headers);
     response.write(JSON.stringify(data));
   } else if (request.url === '/classes/messages' && request.method === 'POST') {
-    response.write('you posted');
-  } 
+    response.writeHead(201, headers);
+    request.on('data', function(d) {
+      data.results.push(JSON.parse(d));
+    });
+  } else if (request.url === '/classes/messages/' && request.method === 'OPTIONS') {
+    response.write(JSON.stringify(defaultCorsHeaders));
+  } else {
+    response.writeHead(404, headers);
+    response.write(JSON.stringify(data));
+  }
+  // response.write(JSON.stringify(data));
   response.end();
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
