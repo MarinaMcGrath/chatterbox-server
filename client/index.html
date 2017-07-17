@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chatterbox</title>
+    
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>-->
+
+    <!-- dependencies -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link media="screen,projection" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <script>
+      // YOU DO NOT NEED TO EDIT THIS CODE
+      if (!/(&|\?)username=/.test(window.location.search)) {
+        var newSearch = window.location.search;
+        if (newSearch !== '' & newSearch !== '?') {
+          newSearch += '&';
+        }
+        newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
+        window.location.search = newSearch;
+      }
+    </script>
+    <!-- your scripts -->
+  </head>
+  <body>
+    <div id="main">
+      <h1>chatterbox</h1>
+      <!-- Your HTML goes here! browser-default -->
+      <button class="waves-effect waves-light btn" id="addLobby">
+        Add
+        <i class="material-icons right">add</i>
+      </button>
+      <button class="waves-effect waves-light btn" id="removeLobby">
+        Remove
+        <i class="material-icons right">delete</i>
+      </button>
+      <input id="newLobby" placeholder="new lobby">
+      <select class="browser-default" id="roomSelect">
+        <label>select room</label>
+      </select>
+
+      <textarea class="materialize-textarea" id="message" placeholder="message"></textarea>
+      <button class="waves-effect waves-light btn submit" id="send">Submit
+        <i class="material-icons right">send</i>
+      </button>
+    </div>
+    <div id="chats"></div>
+
+    <script src="env/config.js"></script>
+    <!--<script src="scripts/app.js"></script>-->
+    <script src="scripts/refac-app.js"></script>
+  </body>
+</html>
