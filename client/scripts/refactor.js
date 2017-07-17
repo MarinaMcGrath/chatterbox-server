@@ -22,7 +22,7 @@
 
 app = {
 
-  server: 'https://api.parse.com/1/classes/messages/',
+  server: 'http://127.0.0.1:3000/classes/messages/',
 
   init: function() {
     // Get username
@@ -76,9 +76,10 @@ app = {
   loadMsgs: function() {
     $.ajax({
       url: app.server,
-      data: { order: '-createdAt' },
+      type: 'GET',
       contentType: 'application/json',
       success: function(json) {
+        json = JSON.parse(json);
         app.displayMessages(json.results);
       },
       complete: function() {
