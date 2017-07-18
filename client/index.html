@@ -4,44 +4,42 @@
     <meta charset="utf-8">
     <title>chatterbox</title>
     <link rel="stylesheet" href="styles/styles.css">
-
     <!-- dependencies -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script>
-      // YOU DO NOT NEED TO EDIT THIS CODE
-      if (!/(&|\?)username=/.test(window.location.search)) {
-        var newSearch = window.location.search;
-        if (newSearch !== '' & newSearch !== '?') {
-          newSearch += '&';
-        }
-        newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
-        window.location.search = newSearch;
-      }
-    </script>
+    <script src="client/bower_components/jquery/dist/jquery.js"></script>
+    <script src="client/bower_components/underscore/underscore.js"></script>
+    <script src="client/bower_components/backbone/backbone.js"></script>
     <!-- your scripts -->
-    <script src="env/config.js"></script>
-    <script src="scripts/app.js"></script>
+    <!-- <script src="env/config.js"></script> -->
+    <script src="scripts/refactor.js"></script>
   </head>
   <body>
     <div id="main">
-      <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
-
+      <h1>chatter<em>box</em></h1>
       <div class="spinner"><img src="images/spiffygif_46x46.gif"></div>
-      <div id="rooms">
-        Room:
-        <select id="roomSelect">
-        </select>
-      </div>
       <form action="#" id="send" method="post">
         <input type="text" name="message" id="message"/>
         <input type="submit" name="submit" class="submit"/>
-      </form>    </div>
+      </form>
+    </div>
     <div id="chats"></div>
-
     <script>
       $(function(){
-        app.init()
+        // change this to true to run the Backbone version
+        var runBackboneSolution = false;
+        if (runBackboneSolution) {
+          // Backbone-based app initialization
+          console.log('Running Backbone Version...');
+          var messages     = new Messages();
+          var formView     = new FormView(    {el: $('#main'),  collection: messages})
+          var messagesView = new MessagesView({el: $('#chats'), collection: messages});
+          setInterval(messages.loadMsgs.bind(messages), 1000);
+          messages.loadMsgs();
+        } else {
+          // jQuery-based app initialization
+          console.log('Running jQuery Version...');
+          app.init();
+        }
       });
-    </script>  </body>
+    </script>
+  </body>
 </html>

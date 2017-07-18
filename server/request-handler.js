@@ -61,9 +61,10 @@ var requestHandler = function(request, response) {
     response.writeHead(statusCode, headers);
     request.on('data', function(d) {
       data.results.push(JSON.parse(d));
-      response.end(JSON.parse(d));
+      response.end(d);
     });
   } else if (request.url === '/classes/messages' && request.method === 'OPTIONS') {
+    response.writeHead(statusCode, headers)
     response.end(JSON.stringify(defaultCorsHeaders));
   } else {
     response.writeHead(404, headers);
