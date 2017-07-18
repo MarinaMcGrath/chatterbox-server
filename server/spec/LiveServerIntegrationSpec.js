@@ -1,10 +1,24 @@
+var requestHandler = require('../request-handler.js');
 var request = require('request');
 var expect = require('chai').expect;
 
 describe('server', function() {
+  it('requestHandler should exist and be a function', function(done) {
+    expect(requestHandler.requestHandler).to.exist;
+    expect(requestHandler.requestHandler).to.be.an('function');
+    done();
+  })
+
   it('should respond to GET requests for /classes/messages with a 200 status code', function(done) {
     request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
       expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+
+  it('should not throw an error when responding to a GET request for /classes/messages', function(done) {
+    request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+      expect(error).to.not.exist;
       done();
     });
   });
@@ -72,6 +86,13 @@ describe('server', function() {
       done();
     });
   });
+
+  it('Should include correct headers', function(done) {
+    request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+      expect(response.headers).to.exist;
+      done();
+    })
+  })
 
 
 });
